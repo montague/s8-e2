@@ -15,3 +15,5 @@ Game play: - The goal of the game is to claim as many roads as possible. The gam
 Strategy: - You can either be greedy and claim roads as soon as you are able, or you can hold out for large road acquisitions by saving up to claim multiple roads at once. The trade off is that you may never have a hand of cards worth exactly 48 points to claim four roads at once. Wait too long, and your opponent(s) might have sliced and diced up the road map so that there aren't many roads left.
 
 Examples: - KCOUNT is 12. The only viable claims must be made with cards (or combinations of cards) totaling multiples of 12. - K 10 4 -- You can't do anything because no combination of cards adds up to a multiple of 12. - Q A 6 4 -- Lots of possibilities. Spend the Q and claim one road. Spend A (as 14) , 6, 4 and claim 2 roads (24 points). Or , spend everything and claim 3 roads.
+
+(to clarify, i envision this game being playable w/o a computer. the game engine will use a graph with sets of edges for each player to simulate the markers and paper stuff, as well as the playing cards)
