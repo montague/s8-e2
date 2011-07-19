@@ -6,8 +6,6 @@ module SellKnives
       @suit = suit
     end
     
-    # TODO allow aces to be valued at 1 or 14
-    
     def ace?
       @display_value == "A"
     end
