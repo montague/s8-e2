@@ -1,7 +1,7 @@
 # A game gets created by passing it a list of players
 module SellKnives
   class Game
-    attr_reader :players, :draw_pile, :spent_pile,:roads,:number_of_roads
+    attr_reader :players, :draw_pile, :spent_pile, :roads, :number_of_roads
 
     def initialize(players)
       @players = players
@@ -22,5 +22,12 @@ module SellKnives
       @roads.count == claimed_roads_count
     end
 
+    def and_the_winner_is
+      if over?
+        return @players.max{|a,b| a.claimed_roads.count <=> b.claimed_roads.count}
+      end
+      
+      nil
+    end
   end
 end

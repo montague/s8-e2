@@ -18,7 +18,7 @@ module SellKnives
         number_of_roads_to_claim.times do
           road_to_claim = roads.keys.select{ |road| roads[road].nil? }.first
           @claimed_roads << road_to_claim
-          roads[road_to_claim] = @name
+          roads[road_to_claim] = self
         end
 
         return true
