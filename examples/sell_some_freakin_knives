@@ -23,10 +23,10 @@ game engine.
     # First, create your players. I like to use really salesman-y names like 
     # Jim Jacobowski or Lenny "Long Legs" Lawrence. 
 
-    jacques = Player.new :"Jacques Strap"
-    mike = Player.new :"Mike Rotch"
-    amanda = Player.new :"Amanda Huggenkiss"
-    ivana = Player.new :"Ivana Tinkle" # probably selling knives door-to-door
+    jacques = Player.new :"Jacques Cousteau"
+    mike = Player.new :"Mike Meyers"
+    amanda = Player.new :"Amanda Beard"
+    ivana = Player.new :"Ivana Trump" # probably selling knives door-to-door
 
     players = [jacques, mike, amanda, ivana]
 
