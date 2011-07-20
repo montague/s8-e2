@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/sell_knives"
+
+class SellKnivesExample
+  include SellKnives
+  LINE_BREAK = ("=" * 30) + "(return to continue)" + ("=" * 30) + "\n"
+
+  def print_this stuff
+    puts stuff
+    puts LINE_BREAK
+    gets
+  end
+
+  def main
+    print_this %{
+What follows is a brief tutorial on how to play (and use) the SellKnives
+game engine.
+    }
+    
+    # Example code to play the SellKnives game
+
+    # First, create your players. I like to use really salesman-y names like 
+    # Jim Jacobowski or Lenny "Long Legs" Lawrence. 
+
+    jacques = Player.new :"Jacques Strap"
+    mike = Player.new :"Mike Rotch"
+    amanda = Player.new :"Amanda Huggenkiss"
+    ivana = Player.new :"Ivana Tinkle" # probably selling knives door-to-door
+
+    players = [jacques, mike, amanda, ivana]
+
+    print_this %{
+To sell knives, you need salespeople. The salespeople for this game are:
+#{jacques.name}
+#{mike.name}
+#{amanda.name}
+#{ivana.name}
+    }
+
+    # Next, create a game using the players
+    the_game = Game.new players
+
+    # On initialization, a game sets the number of roads and the cost of claiming each one
+    print_this %{
+On initialization, the game decides the number of roads and the cost of 
+claiming each one. 
+
+In this game, there are #{the_game.roads.count} roads to claim and the cost for claiming each road 
+is #{the_game.cost_to_claim_a_road} points.
+    }
+    
+    print_this %{
+To start, each player draws a card. Each card is worth its face value in points. 
+J is 11, Q is 12, K is 13, and A is 1.
+    }
+    # Each player draws a card
+    players.each do |player|
+      player.draw_card
+    end
+    print_this %{
+Each turn, a player can draw another card or claim a road if he has enough points. 
+However, he must have card(s) adding up to the exact number of points required 
+to claim a road. For example, if it costs 8 points to claim a road, then a pair 
+of 4s is ok, but a 4 and a 5 is not. After cards are used to claim a road, they 
+are discarded. Let's have each player take two more turns...
+    }
+
+    4.times do
+      players.each do |player|
+        %{
+          #{player.name}'s hand: #{player.show_hand}
+        }
+        if player.claim_roads(1)
+          puts %{
+            #{player.name} claimed a road using #{cost_to_claim_a_road} points. #{ player.hand.empty? ? 'No remaining cards' : 'Remaining cards are ' + player.show_hand}.
+          } 
+        else
+          puts %{
+            #{player.name} couldn't yet claim a road. Drawing a card instead.
+          }
+          player.draw_card
+        end
+      end
+
+    end    
+    print_this %{
+The game starts to require strategy as players pursue their own method of 
+claiming as many roads as possible. Is it best to go for the big score and draw
+cards until you the cards add up to 5 * the cost? Or is it better to claim 
+cards greedily, every time you are able? 
+
+The game ends when all roads have been claimed. The winner is the person 
+who claimed the most roads (and therefore will sell the most knives).
+    }
+
+  end
+end
+
+if __FILE__ == $0
+  SellKnivesExample.new.main
+end

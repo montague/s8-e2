@@ -1,17 +1,24 @@
 # A game gets created by passing it a list of players
 module SellKnives
   class Game
-    attr_reader :players, :draw_pile, :spent_pile, :roads, :number_of_roads
+    attr_reader :players, :draw_pile, :spent_pile, :roads, :cost_to_claim_a_road
 
     def initialize(players)
       @players = players
-      @draw_pile = Deck.new.cards
+      @players.each do |player|
+        player.game = self
+      end
+      shuffle_cards
       @spent_pile = []
-      @number_of_roads = [*8..13].sample
+      @cost_to_claim_a_road = [*8..13].sample
       @roads = {}
-      [*1..@number_of_roads].combination(2).each do |a,b|
+      [*1..@cost_to_claim_a_road].combination(2).each do |a,b|
         @roads[[a,b]] = nil # no road has been claimed yet
       end
+    end
+
+    def shuffle_cards
+      @draw_pile = Deck.new.cards
     end
 
     def claimed_roads_count

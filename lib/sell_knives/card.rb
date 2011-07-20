@@ -10,6 +10,10 @@ module SellKnives
       @display_value == "A"
     end
     
+    def to_display
+      "#{@display_value}#{suit}"
+    end
+    
     private
     def set_values value
       @display_value = value
@@ -23,7 +27,7 @@ module SellKnives
       when "J"
         @value = 11
       else
-        @value = value
+        @value = value.to_i
       end
     end
   end
