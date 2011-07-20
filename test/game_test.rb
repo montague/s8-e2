@@ -52,19 +52,39 @@ class GameTest < Test::Unit::TestCase
     assert_equal 0, p1.hand.count, "Player should spend cards to claim roads"
   end
 
+  def test_players_can_claim_a_road_with_combinations_of_cards
+    p1 = @players.first
+    game = @game
+    game.instance_eval do
+      @cost_to_claim_a_road = 10
+    end
+    points_required = game.cost_to_claim_a_road
+    
+    # got a few cards up my sleeve... heh.
+    %W{7 9 A}.map{ |v| Card.new(v,:H) }.each do |card|
+      p1.hand.send(:<<, card)
+    end
+    
+    assert p1.claim_roads(1), "Should be able to claim a road using 9H + AH"
+    assert_equal 1, p1.claimed_roads.count, "Players should be able to claim a road"
+    assert_equal 1, game.claimed_roads_count, "Game should keep track of count of claimed roads"
+    assert_equal 2, game.spent_pile.count, "Game should keep track of cards spent"
+    assert_equal 1, p1.hand.count, "Player should spend cards to claim roads"
+  end
+
+
   def test_players_cannot_claim_a_road_without_exact_points
     p1 = @players.first
     game = @game
     points_required = game.cost_to_claim_a_road
     number_of_roads_to_claim = 1
-    card = Card.new(points_required+2, :H)
+    card = Card.new(points_required-7, :H)
     p1.hand.send(:<<, card)
 
     assert_equal card, p1.hand.first, "Should have a card"
+    assert !p1.claim_roads(number_of_roads_to_claim), "Should not be able to claim a road"
 
-    assert !p1.claim_roads(number_of_roads_to_claim), "Should be able to claim a road"
-
-    assert_equal 0, p1.claimed_roads.count, "Players should be able to claim a road"
+    assert_equal 0, p1.claimed_roads.count, "Player should not have any claimd roads"
     assert_equal 0, game.claimed_roads_count, "Game should keep track of count of claimed roads"
   end
 

@@ -22,16 +22,21 @@ class PlayerTest < Test::Unit::TestCase
     assert_equal expected, all_combos
   end
 
-  # might come back to this later...
-  # def test_a_player_can_use_ace_as_one_or_fourteen
-  #   p = Player.new(:ian)
-  #   [Card.new("A",:H), Card.new(2,:H)].each do |card|
-  #     p.hand.send(:<<, card)
-  #   end
-  #   p.hand.send(:flatten!)
-  #   
-  #   all_combos = p.send(:all_possible_sums_of_points)
-  #   assert_equal [1,2,3,14,16], all_combos
-  # end
+  def test_a_player_can_use_ace_as_one_or_fourteen
+    p = Player.new(:ian)
+    c1,c2 = Card.new("A",:H), Card.new(2,:H)
+    [c1,c2].each do |card|
+      p.hand.send(:<<, card)
+    end
+    p.hand.send(:flatten!)
+    
+    all_combos = p.send(:all_possible_sums_of_points)
+    expected = {
+      [c1] => [1,14],
+      [c2] => 2,
+      [c1,c2] => [3,16]
+    }
+    assert_equal expected, all_combos
+  end
   
 end

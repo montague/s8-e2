@@ -52,7 +52,7 @@ is #{the_game.cost_to_claim_a_road} points.
     
     print_this %{
 To start, each player draws a card. Each card is worth its face value in points. 
-J is 11, Q is 12, K is 13, and A is 1.
+J is 11, Q is 12, K is 13, and A is 1 or 14.
     }
     # Each player draws a card
     players.each do |player|
@@ -68,16 +68,16 @@ are discarded. Let's have each player take two more turns...
 
     4.times do
       players.each do |player|
-        %{
+        puts %{
           #{player.name}'s hand: #{player.show_hand}
         }
         if player.claim_roads(1)
           puts %{
-            #{player.name} claimed a road using #{cost_to_claim_a_road} points. #{ player.hand.empty? ? 'No remaining cards' : 'Remaining cards are ' + player.show_hand}.
+            -->#{player.name} claimed a road using #{the_game.cost_to_claim_a_road} points. #{ player.hand.empty? ? 'No remaining cards' : 'Remaining cards are ' + player.show_hand}.
           } 
         else
           puts %{
-            #{player.name} couldn't yet claim a road. Drawing a card instead.
+            -->#{player.name} couldn't yet claim a road. Drawing a card instead.
           }
           player.draw_card
         end

@@ -32,14 +32,17 @@ module SellKnives
       sums = all_possible_sums_of_points
       points_required = number_to_claim * @game.cost_to_claim_a_road
       
-      if sums.value? points_required
+      able_to_claim = claim_points sums, points_required
+      
+      if able_to_claim
         number_to_claim.times do
           road_to_claim = @game.roads.keys.select{ |road| @game.roads[road].nil? }.first
           @claimed_roads << road_to_claim
           @game.roads[road_to_claim] = self
         end
+
         # these babies are spent boyeeeee
-        sums.key(points_required).each do |card|
+        sums.key(able_to_claim).each do |card|
           spend_card(card)
         end
         return true
@@ -49,39 +52,32 @@ module SellKnives
     end
 
     private
-    # 
-    # def can_claim? number_to_claim
-    #   all_possible_sums_of_points.value?(number_to_claim * @game.cost_to_claim_a_road)
-    # end
+    
+    
+    def claim_points sums, points_required
+      sums.each do |combo,value|
+        return value if value.respond_to?(:include?) && value.include?(points_required)
+        return value if value == points_required
+      end
+      nil
+    end
 
 
     def all_possible_sums_of_points
       sums = {}
       (1..@hand.count).each do |c|
         @hand.combination(c).each do |combo|
-          sums[combo] = combo.inject(0) {|memo,card| memo + card.value}
+          if combo.any?{|card| card.display_value == "A"}
+            sums[combo] = [
+                combo.inject(0) {|memo,card| memo + card.value},
+                combo.inject(0) {|memo,card| memo + (card.value == 1 ? 14 : card.value)}
+              ]
+          else
+            sums[combo] = combo.inject(0) {|memo,card| memo + card.value}
+          end
         end
       end
       sums
-      # values = @hand.map{ |card| card.value }
-      #       sums = all_possible_sums_of values
-      # 
-      # if @hand.any? {|card| card.ace? } # take care of any aces
-      #   values = @hand.map{ |card| card.value == 1 ? 14 : card.value }
-      #   sums += all_possible_sums_of values
-      # end
-      # sums.uniq.sort
     end
-
-    # def all_possible_sums_of values
-    #   sums = []
-    #   (1..values.count).each do |c|
-    #     values.combination(c).each do |combo|
-    #       sums << combo.inject(:+)
-    #     end
-    #   end
-    #   sums
-    # end
-
   end
 end
