@@ -52,7 +52,19 @@ Examples:
 
 - Q A 6 4 -- Lots of possibilities. Spend the Q and claim one road. Spend A (as 14) , 6, 4 and claim 2 roads (24 points). Or , spend everything and claim 3 roads.
 
-(to clarify, i envision this game being playable w/o a computer. the game engine will
 
 ## Game Engine
 
+To begin using the game engine, create some players.
+    
+    jacques = Player.new :"Jacques Cousteau"
+    mike = Player.new :"Mike Meyers"
+
+Next, create a game for those players and have each player draw a card to start.
+
+    the_game = Game.new [jacques, mike]
+    jacques.draw_card
+    mike.draw_card
+
+The game has started and the race is on! For a more detail how the game engine 
+can be used, check out (and run) the example in `examples/sell_some_freaking_knives`.

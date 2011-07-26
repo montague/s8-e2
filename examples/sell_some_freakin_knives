@@ -6,13 +6,13 @@ class SellKnivesExample
   include SellKnives
   LINE_BREAK = ("=" * 30) + "(return to continue)" + ("=" * 30) + "\n"
 
-  def print_this stuff
+  def self.print_this stuff
     puts stuff
     puts LINE_BREAK
     gets
   end
 
-  def main
+  def self.main
     print_this %{
 What follows is a brief tutorial on how to play (and use) the SellKnives
 game engine.
@@ -20,8 +20,7 @@ game engine.
     
     # Example code to play the SellKnives game
 
-    # First, create your players. I like to use really salesman-y names like 
-    # Jim Jacobowski or Lenny "Long Legs" Lawrence. 
+    # First, create your players.
 
     jacques = Player.new :"Jacques Cousteau"
     mike = Player.new :"Mike Meyers"
@@ -98,5 +97,5 @@ who claimed the most roads (and therefore will sell the most knives).
 end
 
 if __FILE__ == $0
-  SellKnivesExample.new.main
+  SellKnivesExample.main
 end
