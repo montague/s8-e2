@@ -1,54 +1,58 @@
-If you've only ever played family board games such as Scrabble and Monopoly,
-you've missed out on a whole world of geeky goodness. There is an entire
-subculture dedicated to fiendishly complex strategy games that are a ton of fun
-to play and also serve as a great way to exercise the same sort of logic and
-reasoning that you need to use to write good software. Every time I play one of
-these games, I think about what it must take to actually design them and usually
-end up with a headache.
+# Sell Knives for Cut Stuff Co
 
-For this exercise, you'll be taking inspiration from a pair of board games,
-"Ticket to Ride" and "Steam", and then working to come up with a game engine
-that is inspired by them. Please start by watching the following two videos so
-that you can understand what the games are about.
+## Background
 
-  * <http://www.youtube.com/watch?v=f6Prr7iSt58>
-  * <http://www.youtube.com/watch?v=S6YMCVg2_Ak>
+- You are a poor liberal arts major who has just graduated from college. You can't get a job, so as a last resort you attend one of those group interviews for Cut Stuff Co®, purveyor of fine slicing and dicing instruments. Congratulations! You (and everyone else you interviewed with) was offered a job! You start tomorrow.
 
-The guidelines below describe what you're expected to do for this assignment.
+The Sales Route:
 
-* Your goal is to first come up with a set of rules for a train game inspired
-by Steam and/or Ticket to Ride, but without directly copying the ideas of those
-games. Once you have those rules figured out, you are expected to build a game
-engine that enforces the rules and could be used to build a playable game
-without too much effort.
+- It turns out that Cut Stuff Co® knives are wildly popular. So popular, in fact, that you can't walk down a single street without selling out of your knives completely. To solve this problem, CSC has set up knife distribution centers around town. Therefore, the only way you can sell these knives is by stocking up at a distribution center, then walking down a street that leads directly to another distribution center. You stock up again, then walk down another road (at the end of which is yet another CSC distribution center...). These knives are so popular that the salesperson who sells the most each day is simply the one who walked down the most roads.
 
-* You are not expected to build a fully functional game complete with a full
-event loop and user interface, but you should have examples that are detailed
-enough to show how such a game could be built on top of your engine. For
-example, you could create a script that runs on the command line simulating a
-few player actions and then outputting the state of any relevant domain models.
+Ownership of routes:
 
-* Both Steam and Ticket to Ride have some core concepts in common: Connections
-between cities, ownership of those connections, and resources you need to
-collect in order to build those connections. The game rules you come up with
-should incorporate all of those basic concepts.
+- Given the highly competitive nature of sales people (and the fact that you are all armed to the teeth with CSC knives), a system of street ownership has been developed--only one salesperson gets to walk down a particular street. Before you all set out for the day, you play a little game to determine who gets to walk down which road.
 
-* Each game also has some special elements to it that add additional layers of
-complexity or special cases on top of the core concepts. The game rules you
-create should have at least a few of these special elements to keep things
-interesting.
+Pieces required:
 
-* You can and should discuss this problem with other students in the session.
-While each student is expected to do a non-trivial amount of modeling for this
-assignment, and we expect that no two students will have identical rulesets to
-work on, there is a good deal of overlap in the overall design of games like
-this as well as in some of the implementation code for various core structures
-(such as a deck of cards). You are encouraged to share code with one another as
-much as you'd like, as long as you have a large enough non-trivial portion of
-your program that is your own work.
+- Standard deck of cards (no jokers except for the players... heh)  
+- Paper and a different colored marker for each player.  
 
-* This is the challenge problem for this session, so don't worry if it seems
-complex. It is as much about requirements discovery and product development as
-it is about writing functional code. Be sure to ask questions as they come
-up, and simplify the problem as needed to get to a point that you feel you can
-work on it. If you get stuck, just let us know and we'll help you out.
+Set up:
+
+- Each player draws a card until someone has picked a card that is greater than 7. This is the number of knife centers in the game. For example, assume the card chosen was a Queen (12). There are 12 knife centers. We'll call this number KCOUNT.
+
+- Each knife distribution center (KDC) is drawn as a circle on the piece of paper. Initially, there are no claimed roads and therefore, no connections between the KDCs.  - The cards chosen are returned to the deck. 
+
+- The deck becomes the draw pile. Spent cards are placed in a discard pile. If the draw pile ever becomes empty, the discard pile is shuffled and becomes the new draw pile.
+
+Game play:
+
+- The goal of the game is to claim as many roads as possible. The game ends when every possible road between each KDC has been claimed by a CSC salesperson. 
+- Each turn, a player can do one of two things:  
+
+  - draw a card  
+  
+  - claim one or more roads
+
+- Each card drawn adds that many points to a player's road stash.  
+
+- To claim a road, the player needs to spend exactly KCOUNT points (or a multiple of KCOUNT to claim more than one road). For our example, drawing a Q allows the player to immediately claim ownership of a road on his next turn. After claiming the road, the card is placed in the discard pile. The player can then take his marker and draw his road on the map.
+
+- Aces can count as either 1 or 14 points.
+
+Strategy:  
+
+- You can either be greedy and claim roads as soon as you are able, or you can hold out for large road acquisitions by saving up to claim multiple roads at once. The trade off is that you may never have a hand of cards worth exactly 48 points to claim four roads at once. Wait too long, and your opponent(s) might have sliced and diced up the road map so that there aren't many roads left.
+
+Examples:  
+
+- KCOUNT is 12. The only viable claims must be made with cards (or combinations of cards) totaling multiples of 12.  
+
+- K 10 4 -- You can't do anything because no combination of cards adds up to a multiple of 12. 
+
+- Q A 6 4 -- Lots of possibilities. Spend the Q and claim one road. Spend A (as 14) , 6, 4 and claim 2 roads (24 points). Or , spend everything and claim 3 roads.
+
+(to clarify, i envision this game being playable w/o a computer. the game engine will
+
+## Game Engine
+
