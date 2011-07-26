@@ -119,7 +119,7 @@ class GameTest < Test::Unit::TestCase
     
     assert_equal 1, p2.claimed_roads.count, "Player two should still have one claimed road"
     assert_equal game.roads.count - 1, p1.claimed_roads.count, "Player one has a shitload of claimed roads"
-    assert_equal p1, game.and_the_winner_is, "Player one should win"
+    assert_equal p1, game.winner, "Player one should win"
   end
   
   def test_if_all_cards_have_been_drawn_game_reshuffles
