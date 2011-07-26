@@ -66,5 +66,4 @@ Next, create a game for those players and have each player draw a card to start.
     jacques.draw_card
     mike.draw_card
 
-The game has started and the race is on! For a more detail how the game engine 
-can be used, check out (and run) the example in `examples/sell_some_freaking_knives`.
+The game has started and the race is on! For an in-code example of how the game engine can be used, take a look at (and run) `examples/sell_some_freaking_knives`.
