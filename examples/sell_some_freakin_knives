@@ -63,7 +63,7 @@ Each turn, a player can draw another card or claim a road if he has enough point
 However, he must have card(s) adding up to the exact number of points required 
 to claim a road. For example, if it costs 8 points to claim a road, then a pair 
 of 4s is ok, but a 4 and a 5 is not. After cards are used to claim a road, they 
-are discarded. Let's have each player take two more turns...
+are discarded. Let's have each player take four more turns...
     }
 
     4.times do
