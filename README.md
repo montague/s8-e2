@@ -58,7 +58,7 @@ Examples:
 To begin using the game engine, create some players.
     
     jacques = Player.new :"Jacques Cousteau"
-    mike = Player.new :"Mike Meyers"
+    mike    = Player.new :"Mike Meyers"
 
 Next, create a game for those players and have each player draw a card to start.
 
